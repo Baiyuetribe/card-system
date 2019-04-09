@@ -1,0 +1,39 @@
+version: '3.1'
+services:
+  #风铃发卡2.5版：适合个人使用
+  # The Application
+  app:
+    image: "baiyuetribe/card-system:app2.5"
+    environment:
+      - "DB_PASSWORD=baiyue.one"
+    networks:
+        - frontend
+        - backend        
+    depends_on:
+        - mysql
+  # The Web Server
+  web:
+    image: "baiyuetribe/card-system:web2.5"
+    ports:
+      - 8080:80
+    networks:
+        - frontend      
+    depends_on:
+        - app
+  # The Database
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - /opt/card/mysql:/var/lib/mysql
+    environment:
+      - "TZ=Asia/Shanghai"
+      - "MYSQL_DATABASE=faka"
+      - "MYSQL_ROOT_PASSWORD=baiyue.one"
+    ports:
+        - "3306:3306"
+    networks:
+        - backend 
+
+networks:
+    frontend:
+    backend:  
