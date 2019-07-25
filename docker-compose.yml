@@ -10,7 +10,7 @@ services:
     restart: always
     container_name: card           
     ports:
-      - 300:80      
+      - 3007:80      
     volumes:
       - /opt/card/html:/card      
     depends_on:
