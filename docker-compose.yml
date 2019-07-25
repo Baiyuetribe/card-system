@@ -1,0 +1,35 @@
+version: '3.1'
+services:
+  #风铃发卡Docker版
+  # The Application
+  php:
+    image: baiyuetribe/card-system
+    #build:
+      #context: ./
+      #dockerfile: alpine.dockerfile
+    restart: always
+    container_name: card           
+    ports:
+      - 300:80      
+    volumes:
+      - /opt/card/html:/card      
+    depends_on:
+        - mysql
+    networks:
+        - cardnet         
+  # The DB Server
+  mysql:
+    image: mysql:latest
+    restart: always        
+    volumes:
+      - /opt/card/mysql:/var/lib/mysql
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_DATABASE=faka
+      - MYSQL_ROOT_PASSWORD=baiyue.one
+    networks:
+        - cardnet 
+        
+networks:
+    cardnet:
+
